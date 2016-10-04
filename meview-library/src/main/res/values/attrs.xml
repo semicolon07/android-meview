@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MeViewChoiceGroup">
+        <attr name="onc_activeColor" format="color"></attr>
+        <attr name="onc_inactiveColor" format="color"></attr>
+        <attr name="onc_disabledColor" format="color"></attr>
+    </declare-styleable>
+    <declare-styleable name="MeViewChoiceItem">
+        <attr name="onc_itemState">
+            <enum name="inactive" value="0"/>
+            <enum name="active" value="1"/>
+            <enum name="disabled" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

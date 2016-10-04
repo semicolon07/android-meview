@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.unigainfo.android.meview.sample.MainActivity">
+
+    <com.unigainfo.android.meview.onechoice.ChoiceGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:onc_activeColor="#000000"
+        app:onc_inactiveColor="#585757"
+        app:onc_disabledColor="#f48989"
+        app:flexWrap="wrap">
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:text="TIME IN"
+            app:onc_itemState="active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:layout_marginLeft="8dp"
+            android:text="TIME OUT"
+            app:onc_itemState="inactive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:layout_marginLeft="8dp"
+            android:text="B-In"
+            app:onc_itemState="disabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </com.unigainfo.android.meview.onechoice.ChoiceGroup>
+</RelativeLayout>
