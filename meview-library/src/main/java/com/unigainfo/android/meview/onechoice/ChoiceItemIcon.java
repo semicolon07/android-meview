@@ -6,40 +6,42 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.unigainfo.android.meview.R;
+
+import static com.unigainfo.android.meview.onechoice.ChoiceItemState.ACTIVE;
 
 /**
  * Created by Semicolon07 on 10/2/2016 AD.
  */
 
-public class ChoiceItemText extends TextView {
+public class ChoiceItemIcon extends ImageView {
     public static final int ITEM_STATE_INACTIVE = 0;
     public static final int ITEM_STATE_ACTIVE = 1;
     public static final int ITEM_STATE_DISABLED = 2;
     private int mItemState;
 
 
-    public ChoiceItemText(Context context) {
+    public ChoiceItemIcon(Context context) {
         super(context);
         init();
     }
 
-    public ChoiceItemText(Context context, AttributeSet attrs) {
+    public ChoiceItemIcon(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
         initWithAttrs(attrs, 0, 0);
     }
 
-    public ChoiceItemText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ChoiceItemIcon(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
         initWithAttrs(attrs, defStyleAttr, 0);
     }
 
     @TargetApi(21)
-    public ChoiceItemText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ChoiceItemIcon(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
         initWithAttrs(attrs, defStyleAttr, defStyleRes);
@@ -71,6 +73,7 @@ public class ChoiceItemText extends TextView {
         } finally {
             a.recycle();
         }
+
     }
 
     public ChoiceItemState getItemState(){
@@ -78,7 +81,7 @@ public class ChoiceItemText extends TextView {
             case ITEM_STATE_INACTIVE:
                 return ChoiceItemState.INACTIVE;
             case ITEM_STATE_ACTIVE:
-                return ChoiceItemState.ACTIVE;
+                return ACTIVE;
             case ITEM_STATE_DISABLED:
                 return ChoiceItemState.DISABLED;
             default:
@@ -86,7 +89,6 @@ public class ChoiceItemText extends TextView {
         }
         return ChoiceItemState.DISABLED;
     }
-
     public void setItemState(ChoiceItemState state){
         mItemState = state.getStateCode();
     }

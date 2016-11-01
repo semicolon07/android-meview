@@ -1,47 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.unigainfo.android.meview.sample.MainActivity">
 
     <com.unigainfo.android.meview.onechoice.ChoiceGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
+        android:background="#5a565656"
+        android:orientation="vertical"
+        android:padding="8dp"
         app:alignContent="stretch"
         app:alignItems="stretch"
-        app:onc_activeColor="#000000"
-        app:onc_inactiveColor="#585757"
-        app:onc_disabledColor="#f48989"
-        app:flexWrap="wrap">
+        app:flexWrap="wrap"
+        app:onc_activeColor="#FFFFFF"
+        app:onc_disabledColor="#c9c9c9"
+        app:onc_inactiveColor="#dadada">
 
         <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:text="TIME IN"
-            app:onc_itemState="active"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            app:onc_itemState="active" />
 
         <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
             android:text="TIME OUT"
-            app:onc_itemState="inactive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            app:onc_itemState="inactive" />
 
         <com.unigainfo.android.meview.onechoice.ChoiceItemText
-            android:layout_marginLeft="8dp"
-            android:text="B-In"
-            app:onc_itemState="disabled"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="B-In"
+            app:onc_itemState="disabled" />
 
     </com.unigainfo.android.meview.onechoice.ChoiceGroup>
-</RelativeLayout>
+
+
+    <com.unigainfo.android.meview.onechoice.ChoiceGroup
+        android:id="@+id/iconItemGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:onc_activeColor="#FFFFFF"
+        app:onc_disabledColor="#c9c9c9"
+        app:onc_inactiveColor="#dadada">
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemIcon
+            android:id="@+id/firstItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_broken_image"
+            app:onc_itemState="inactive" />
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemIcon
+            android:id="@+id/secondItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_broken_image"
+            app:onc_itemState="inactive" />
+    </com.unigainfo.android.meview.onechoice.ChoiceGroup>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        tools:listitem="@layout/list_item_student"></android.support.v7.widget.RecyclerView>
+</LinearLayout>

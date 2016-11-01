@@ -1,7 +1,6 @@
 package com.unigainfo.android.meview.onechoice;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,14 +17,23 @@ import com.unigainfo.android.meview.base.state.BundleSavedState;
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-class ChoiceGroup extends BaseFlexBoxLayout {
+public class ChoiceGroup extends BaseFlexBoxLayout{
+
+    public interface Listener{
+        void onChoiceItemClick(View view);
+    }
+
+
+    private int totalChildCount;
     private static final String TAG = "OneChoiceGroup";
     private static final int INACTIVE_ITEM_DEFAULT_COLOR = 0xFFFFFF;
     private static final int DISABLED_ITEM_DEFAULT_COLOR = 0xFFFFFF;
+    private static final int ACTIVE_ITEM_DEFAULT_COLOR = 0xFFFFFF;
 
-    private ColorStateList activeItemColor;
+    private int activeItemColor;
     private int inactiveColor;
     private int disabledColor;
+    private Listener listener;
 
     public ChoiceGroup(Context context) {
         super(context);
@@ -47,6 +55,10 @@ class ChoiceGroup extends BaseFlexBoxLayout {
         initWithAttrs(attrs, defStyleAttr, 0);
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
 
     private void initInflate() {
         //inflate(getContext(), R.layout.meview_onechoice_layout, this);
@@ -65,13 +77,19 @@ class ChoiceGroup extends BaseFlexBoxLayout {
     }
 
     private void createChildStyle() {
-        int childCount = getChildCount();
-        log("Total child count = "+childCount);
-        for(int index = 0 ; index < childCount; index++){
+        totalChildCount = getChildCount();
+
+        for(int index = 0 ; index < totalChildCount; index++){
             View v = getChildAt(index);
             if(v instanceof ChoiceItemText){
                 ChoiceItemText textItem = (ChoiceItemText) v;
                 setChoiceItemTextColor(textItem);
+                textItem.setOnClickListener(onItemClickListener);
+            }
+            if(v instanceof ChoiceItemIcon){
+                ChoiceItemIcon iconItem = (ChoiceItemIcon) v;
+                setChoiceItemIconColor(iconItem);
+                iconItem.setOnClickListener(onItemClickListener);
             }
         }
     }
@@ -81,13 +99,14 @@ class ChoiceGroup extends BaseFlexBoxLayout {
         switch (itemState){
             case INACTIVE:
                 view.setTextColor(inactiveColor);
+                view.setTypeface(null, Typeface.NORMAL);
                 break;
             case ACTIVE:
                 float oldTextSize = view.getTextSize();
                 view.setTextColor(activeItemColor);
                 view.setTypeface(null, Typeface.BOLD);
                 //log("Old text size = "+oldTextSize);
-                view.setTextSize(TypedValue.COMPLEX_UNIT_PX, oldTextSize+8);
+                view.setTextSize(TypedValue.COMPLEX_UNIT_PX, oldTextSize);
                 break;
             case DISABLED:
                 view.setTextColor(disabledColor);
@@ -95,11 +114,25 @@ class ChoiceGroup extends BaseFlexBoxLayout {
         }
     }
 
+    private void setChoiceItemIconColor(ChoiceItemIcon iconItem){
+        ChoiceItemState itemState = iconItem.getItemState();
+        switch (itemState){
+            case INACTIVE:
+                iconItem.setColorFilter(inactiveColor);
+                break;
+            case ACTIVE:
+                iconItem.setColorFilter(activeItemColor);
+                break;
+            case DISABLED:
+                iconItem.setColorFilter(disabledColor);
+                break;
+        }
+    }
+
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        log("onMeasure");
-        log("activeItemColor : "+activeItemColor);
     }
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -108,7 +141,7 @@ class ChoiceGroup extends BaseFlexBoxLayout {
                 R.styleable.MeViewChoiceGroup,
                 defStyleAttr, defStyleRes);
         try {
-            activeItemColor = attr.getColorStateList(R.styleable.MeViewChoiceGroup_onc_activeColor);
+            activeItemColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_activeColor,ACTIVE_ITEM_DEFAULT_COLOR);
             inactiveColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_inactiveColor,INACTIVE_ITEM_DEFAULT_COLOR);
             disabledColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_disabledColor,DISABLED_ITEM_DEFAULT_COLOR);
         } finally {
@@ -142,4 +175,55 @@ class ChoiceGroup extends BaseFlexBoxLayout {
         // Restore State from bundle here
     }
 
+    private final View.OnClickListener onItemClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            manageViewState(view);
+        }
+    };
+
+
+    private void manageViewState(View view) {
+        if(view instanceof ChoiceItemText){
+            ChoiceItemText textItem = (ChoiceItemText) view;
+            if(textItem.getItemState() == ChoiceItemState.DISABLED) return;
+
+            textItem.setItemState(ChoiceItemState.ACTIVE);
+            setChoiceItemTextColor(textItem);
+            triggerOnItemClickListener(view);
+        }
+
+        if(view instanceof ChoiceItemIcon){
+            ChoiceItemIcon iconItem = (ChoiceItemIcon) view;
+            if(iconItem.getItemState() == ChoiceItemState.DISABLED) return;
+
+            iconItem.setItemState(ChoiceItemState.ACTIVE);
+            setChoiceItemIconColor(iconItem);
+            triggerOnItemClickListener(view);
+        }
+
+        for(int index = 0 ; index < totalChildCount; index++){
+            View v = getChildAt(index);
+            if(v == view) continue;
+            if(v instanceof ChoiceItemText){
+                ChoiceItemText textItem = (ChoiceItemText) v;
+                if(textItem.getItemState() != ChoiceItemState.ACTIVE) continue;
+
+                textItem.setItemState(ChoiceItemState.INACTIVE);
+                setChoiceItemTextColor(textItem);
+            }
+            if(v instanceof ChoiceItemIcon){
+                ChoiceItemIcon iconItem = (ChoiceItemIcon) v;
+                if(iconItem.getItemState() != ChoiceItemState.ACTIVE) return;
+
+                iconItem.setItemState(ChoiceItemState.INACTIVE);
+                setChoiceItemIconColor(iconItem);
+            }
+        }
+    }
+
+    private void triggerOnItemClickListener(View view){
+        if(listener!=null)
+            listener.onChoiceItemClick(view);
+    }
 }

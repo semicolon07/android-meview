@@ -5,5 +5,16 @@ package com.unigainfo.android.meview.onechoice;
  */
 
 enum  ChoiceItemState {
-    ACTIVE,INACTIVE,DISABLED
+    ACTIVE(1),INACTIVE(0),DISABLED(2);
+
+    private final int stateCode;
+
+    ChoiceItemState(int stateCode) {
+
+        this.stateCode = stateCode;
+    }
+
+    public int getStateCode() {
+        return stateCode;
+    }
 }
