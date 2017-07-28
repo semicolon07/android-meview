@@ -13,7 +13,7 @@ import com.unigainfo.android.meview.base.state.BundleSavedState;
 
 
 /**
- * Created by nuuneoi on 1/9/2016.
+ * Created by pongphop on 1/9/2016.
  */
 public abstract class BaseCustomViewGroup extends FrameLayout {
 
@@ -57,6 +57,11 @@ public abstract class BaseCustomViewGroup extends FrameLayout {
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof BundleSavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
         BundleSavedState ss = (BundleSavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
 

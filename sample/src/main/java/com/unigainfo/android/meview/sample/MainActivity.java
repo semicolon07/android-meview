@@ -1,6 +1,8 @@
 package com.unigainfo.android.meview.sample;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import com.unigainfo.android.meview.sample.model.Student;
 import com.unigainfo.android.meview.sample.viewholderfactory.BasicAdapter;
 import com.unigainfo.android.meview.sample.viewholderfactory.HeaderViewHolderFactory;
 import com.unigainfo.android.meview.sample.viewholderfactory.ImageWithLabelViewHolderFactory;
+import com.unigainfo.android.meview.sample.viewholderfactory.MyLinearLayoutManager;
 import com.unigainfo.android.meview.sample.viewholderfactory.StudentReverseViewHolderFactory;
 import com.unigainfo.android.meview.sample.viewholderfactory.StudentViewHolderFactory;
 
@@ -33,8 +36,10 @@ public class MainActivity extends AppCompatActivity implements StudentViewHolder
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         iconItemGroup = (ChoiceGroup) findViewById(R.id.iconItemGroup);
-        iconItemGroup.setListener(this);
-        //initMeAdapterInstance();
+        //iconItemGroup.hideChoiceById(R.id.breakOut_choiceItem);
+        iconItemGroup.activeChoiceById(R.id.breakOut_choiceItem);
+        initMeAdapterInstance();
+
         //initBasicAdapterInstances();
     }
 
@@ -45,19 +50,30 @@ public class MainActivity extends AppCompatActivity implements StudentViewHolder
     }
 
     private void initMeAdapterInstance() {
-        MeFlexAdapter<Object> flexibleAdapter = new MyAdapter(this);
+        final MeFlexAdapter<Object> flexibleAdapter = new MyAdapter(this);
         flexibleAdapter.registerViewHolderFactory(new StudentViewHolderFactory(this));
         flexibleAdapter.registerViewHolderFactory(new HeaderViewHolderFactory());
         flexibleAdapter.registerViewHolderFactory(new ImageWithLabelViewHolderFactory());
         flexibleAdapter.registerViewHolderFactory(new StudentReverseViewHolderFactory(this),99);
 
-        flexibleAdapter.add(new Student("ReverseEmail@gmail.com","Apple Pen"),99);
-        flexibleAdapter.addAll(initStudentList());
+        MyLinearLayoutManager layoutManager = new MyLinearLayoutManager(this);
+        layoutManager.setItemPrefetchEnabled(true);
+        layoutManager.setInitialPrefetchItemCount(5);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(flexibleAdapter);
 
-        flexibleAdapter.clear();
+        //flexibleAdapter.add(new Student("ReverseEmail@gmail.com","Apple Pen"),99);
+        flexibleAdapter.insert(new Student("nice.comsci@unigainfo.com","Pongphop"),1);
+        flexibleAdapter.addAll(initStudentList());
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                flexibleAdapter.insert(new Student("Index0@gmail","Index0"),0);
+            }
+        }, 2000);
+
     }
 
     private List<Student> initPureStudentList(){

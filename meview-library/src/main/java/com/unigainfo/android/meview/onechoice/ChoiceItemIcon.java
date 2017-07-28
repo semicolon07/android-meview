@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.unigainfo.android.meview.R;
@@ -17,6 +18,7 @@ import static com.unigainfo.android.meview.onechoice.ChoiceItemState.ACTIVE;
  */
 
 public class ChoiceItemIcon extends ImageView {
+    private static final String TAG = "ChoiceItemIcon";
     public static final int ITEM_STATE_INACTIVE = 0;
     public static final int ITEM_STATE_ACTIVE = 1;
     public static final int ITEM_STATE_DISABLED = 2;
@@ -53,9 +55,14 @@ public class ChoiceItemIcon extends ImageView {
         // Set default selected background
         int[] defaultItemBgAttrs = new int[] { android.R.attr.selectableItemBackgroundBorderless};
         TypedArray ta = getContext().obtainStyledAttributes(defaultItemBgAttrs);
-        Drawable drawableFromTheme = ta.getDrawable(0);
-        this.setBackground(drawableFromTheme);
-        ta.recycle();
+        try{
+            Drawable drawableFromTheme = ta.getDrawable(0);
+            this.setBackground(drawableFromTheme);
+        }catch (Exception e){
+            Log.e(TAG,e.getMessage());
+        }finally {
+            ta.recycle();
+        }
 
         setClickable(true);
     }

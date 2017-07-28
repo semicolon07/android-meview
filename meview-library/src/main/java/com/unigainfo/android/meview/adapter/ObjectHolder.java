@@ -4,7 +4,7 @@ package com.unigainfo.android.meview.adapter;
  * Created by Semicolon07 on 10/8/2016 AD.
  */
 
-public final class ObjectHolder<O> {
+final class ObjectHolder<O> {
     private O object;
     private int viewType;
 

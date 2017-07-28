@@ -17,9 +17,10 @@ import com.unigainfo.android.meview.base.state.BundleSavedState;
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-public class ChoiceGroup extends BaseFlexBoxLayout{
+public class ChoiceGroup extends BaseFlexBoxLayout {
 
-    public interface Listener{
+
+    public interface Listener {
         void onChoiceItemClick(View view);
     }
 
@@ -79,14 +80,14 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
     private void createChildStyle() {
         totalChildCount = getChildCount();
 
-        for(int index = 0 ; index < totalChildCount; index++){
+        for (int index = 0; index < totalChildCount; index++) {
             View v = getChildAt(index);
-            if(v instanceof ChoiceItemText){
+            if (v instanceof ChoiceItemText) {
                 ChoiceItemText textItem = (ChoiceItemText) v;
                 setChoiceItemTextColor(textItem);
                 textItem.setOnClickListener(onItemClickListener);
             }
-            if(v instanceof ChoiceItemIcon){
+            if (v instanceof ChoiceItemIcon) {
                 ChoiceItemIcon iconItem = (ChoiceItemIcon) v;
                 setChoiceItemIconColor(iconItem);
                 iconItem.setOnClickListener(onItemClickListener);
@@ -94,9 +95,9 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
         }
     }
 
-    private void setChoiceItemTextColor(ChoiceItemText view){
+    private void setChoiceItemTextColor(ChoiceItemText view) {
         ChoiceItemState itemState = view.getItemState();
-        switch (itemState){
+        switch (itemState) {
             case INACTIVE:
                 view.setTextColor(inactiveColor);
                 view.setTypeface(null, Typeface.NORMAL);
@@ -114,9 +115,9 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
         }
     }
 
-    private void setChoiceItemIconColor(ChoiceItemIcon iconItem){
+    private void setChoiceItemIconColor(ChoiceItemIcon iconItem) {
         ChoiceItemState itemState = iconItem.getItemState();
-        switch (itemState){
+        switch (itemState) {
             case INACTIVE:
                 iconItem.setColorFilter(inactiveColor);
                 break;
@@ -141,17 +142,17 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
                 R.styleable.MeViewChoiceGroup,
                 defStyleAttr, defStyleRes);
         try {
-            activeItemColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_activeColor,ACTIVE_ITEM_DEFAULT_COLOR);
-            inactiveColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_inactiveColor,INACTIVE_ITEM_DEFAULT_COLOR);
-            disabledColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_disabledColor,DISABLED_ITEM_DEFAULT_COLOR);
+            activeItemColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_activeColor, ACTIVE_ITEM_DEFAULT_COLOR);
+            inactiveColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_inactiveColor, INACTIVE_ITEM_DEFAULT_COLOR);
+            disabledColor = attr.getColor(R.styleable.MeViewChoiceGroup_onc_disabledColor, DISABLED_ITEM_DEFAULT_COLOR);
         } finally {
             attr.recycle();
         }
     }
 
 
-    private void log(String message){
-        Log.i(TAG,message);
+    private void log(String message) {
+        Log.i(TAG, message);
     }
 
     @Override
@@ -161,7 +162,7 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
         BundleSavedState savedState = new BundleSavedState(superState);
         // Save Instance State(s) here to the 'savedState.getBundle()'
         // for example,
-        // savedState.getBundle().putString("key", value);
+        //savedState.getBundle().putString("key", "");
 
         return savedState;
     }
@@ -169,7 +170,7 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         BundleSavedState ss = (BundleSavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
+        super.onRestoreInstanceState(ss.superState);
 
         Bundle bundle = ss.getBundle();
         // Restore State from bundle here
@@ -182,39 +183,66 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
         }
     };
 
+    public void hideChoiceById(int resId) {
+        View v = getChildById(resId);
+        if (v != null)
+            v.setVisibility(GONE);
+    }
+    public void showChoiceById(int resId) {
+        View v = getChildById(resId);
+        if (v != null)
+            v.setVisibility(VISIBLE);
+    }
+
+    public void activeChoiceById(int resId) {
+        View v = getChildById(resId);
+        v.performClick();
+    }
+
+
+    private View getChildById(int resId) {
+        for (int index = 0; index < totalChildCount; index++) {
+            View v = getChildAt(index);
+            if (v.getId() == resId) {
+                return v;
+            }
+        }
+        return null;
+    }
+
 
     private void manageViewState(View view) {
-        if(view instanceof ChoiceItemText){
+        if (view instanceof ChoiceItemText) {
             ChoiceItemText textItem = (ChoiceItemText) view;
-            if(textItem.getItemState() == ChoiceItemState.DISABLED) return;
+            if (textItem.getItemState() == ChoiceItemState.DISABLED) return;
 
             textItem.setItemState(ChoiceItemState.ACTIVE);
             setChoiceItemTextColor(textItem);
             triggerOnItemClickListener(view);
         }
 
-        if(view instanceof ChoiceItemIcon){
+        if (view instanceof ChoiceItemIcon) {
             ChoiceItemIcon iconItem = (ChoiceItemIcon) view;
-            if(iconItem.getItemState() == ChoiceItemState.DISABLED) return;
+            if (iconItem.getItemState() == ChoiceItemState.DISABLED) return;
 
             iconItem.setItemState(ChoiceItemState.ACTIVE);
             setChoiceItemIconColor(iconItem);
             triggerOnItemClickListener(view);
         }
 
-        for(int index = 0 ; index < totalChildCount; index++){
+        for (int index = 0; index < totalChildCount; index++) {
             View v = getChildAt(index);
-            if(v == view) continue;
-            if(v instanceof ChoiceItemText){
+            if (v == view) continue;
+            if (v instanceof ChoiceItemText) {
                 ChoiceItemText textItem = (ChoiceItemText) v;
-                if(textItem.getItemState() != ChoiceItemState.ACTIVE) continue;
+                if (textItem.getItemState() != ChoiceItemState.ACTIVE) continue;
 
                 textItem.setItemState(ChoiceItemState.INACTIVE);
                 setChoiceItemTextColor(textItem);
             }
-            if(v instanceof ChoiceItemIcon){
+            if (v instanceof ChoiceItemIcon) {
                 ChoiceItemIcon iconItem = (ChoiceItemIcon) v;
-                if(iconItem.getItemState() != ChoiceItemState.ACTIVE) return;
+                if (iconItem.getItemState() != ChoiceItemState.ACTIVE) return;
 
                 iconItem.setItemState(ChoiceItemState.INACTIVE);
                 setChoiceItemIconColor(iconItem);
@@ -222,8 +250,8 @@ public class ChoiceGroup extends BaseFlexBoxLayout{
         }
     }
 
-    private void triggerOnItemClickListener(View view){
-        if(listener!=null)
+    private void triggerOnItemClickListener(View view) {
+        if (listener != null)
             listener.onChoiceItemClick(view);
     }
 }

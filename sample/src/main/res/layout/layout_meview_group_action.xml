@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.unigainfo.android.meview.onechoice.ChoiceGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#5a565656"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexWrap="wrap"
+        app:onc_activeColor="#FFFFFF"
+        app:onc_disabledColor="#c9c9c9"
+        app:onc_inactiveColor="#dadada">
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="TIME IN"
+            app:onc_itemState="active" />
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="TIME OUT"
+            app:onc_itemState="inactive" />
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="B-In"
+            app:onc_itemState="disabled" />
+
+    </com.unigainfo.android.meview.onechoice.ChoiceGroup>
+
+
+    <com.unigainfo.android.meview.onechoice.ChoiceGroup
+        android:id="@+id/iconItemGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:onc_activeColor="#FFFFFF"
+        app:onc_disabledColor="#c9c9c9"
+        app:onc_inactiveColor="#dadada">
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemIcon
+            android:id="@+id/firstItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_broken_image"
+            app:onc_itemState="inactive" />
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemIcon
+            android:id="@+id/secondItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_broken_image"
+            app:onc_itemState="inactive" />
+    </com.unigainfo.android.meview.onechoice.ChoiceGroup>
+
+</LinearLayout>

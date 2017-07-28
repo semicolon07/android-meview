@@ -81,7 +81,7 @@ class CustomViewGroupTemplate extends BaseCustomViewGroup {
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         BundleSavedState ss = (BundleSavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
+        super.onRestoreInstanceState(ss.superState);
 
         Bundle bundle = ss.getBundle();
         // Restore State from bundle here

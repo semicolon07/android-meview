@@ -49,6 +49,11 @@ public abstract class BaseFlexBoxLayout extends FlexboxLayout {
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof BundleSavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
         BundleSavedState ss = (BundleSavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
 

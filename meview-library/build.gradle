@@ -3,14 +3,14 @@ apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 26
+        versionCode 5
+        versionName "1.1.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -23,7 +23,7 @@ android {
     }
 }
 
-def supportLibraryVersion = '24.2.1'
+def supportLibraryVersion = '26.0.0'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -38,7 +38,7 @@ dependencies {
 
 def libraryGroupId = 'com.unigainfo.android'
 def libraryArtifactId = 'meview-library'
-def libraryVersion = '1.0.6'
+def libraryVersion = '1.1.5'
 
 publishing {
     publications {
@@ -53,13 +53,14 @@ publishing {
 }
 
 artifactory {
-    contextUrl = 'http://unigainfo.homedns.org:8081/artifactory'
+    //contextUrl = 'http://unigainfo.homedns.org:8081/artifactory'
+    contextUrl = 'http://180.183.248.152:12083/artifactory'
     publish {
         repository {
             repoKey = 'libs-release-local'
 
-            username = artifactory_username
-            password = artifactory_password
+            username = csc_artifactory_username
+            password = csc_artifactory_password
         }
         defaults {
             publications('aar')

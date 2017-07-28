@@ -5,47 +5,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#7c7b7b"
     android:orientation="vertical"
     tools:context="com.unigainfo.android.meview.sample.MainActivity">
-
-    <com.unigainfo.android.meview.onechoice.ChoiceGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#5a565656"
-        android:orientation="vertical"
-        android:padding="8dp"
-        app:alignContent="stretch"
-        app:alignItems="stretch"
-        app:flexWrap="wrap"
-        app:onc_activeColor="#FFFFFF"
-        app:onc_disabledColor="#c9c9c9"
-        app:onc_inactiveColor="#dadada">
-
-        <com.unigainfo.android.meview.onechoice.ChoiceItemText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="TIME IN"
-            app:onc_itemState="active" />
-
-        <com.unigainfo.android.meview.onechoice.ChoiceItemText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="TIME OUT"
-            app:onc_itemState="inactive" />
-
-        <com.unigainfo.android.meview.onechoice.ChoiceItemText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="B-In"
-            app:onc_itemState="disabled" />
-
-    </com.unigainfo.android.meview.onechoice.ChoiceGroup>
-
 
     <com.unigainfo.android.meview.onechoice.ChoiceGroup
         android:id="@+id/iconItemGroup"
@@ -55,19 +17,23 @@
         app:onc_disabledColor="#c9c9c9"
         app:onc_inactiveColor="#dadada">
 
-        <com.unigainfo.android.meview.onechoice.ChoiceItemIcon
-            android:id="@+id/firstItem"
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:id="@+id/timeIn_choiceItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_broken_image"
+            android:gravity="center_vertical"
+            android:text="IN"
+            app:onc_itemState="active" />
+
+        <com.unigainfo.android.meview.onechoice.ChoiceItemText
+            android:id="@+id/breakOut_choiceItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:gravity="center_vertical"
+            android:text="OUT"
             app:onc_itemState="inactive" />
 
-        <com.unigainfo.android.meview.onechoice.ChoiceItemIcon
-            android:id="@+id/secondItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_broken_image"
-            app:onc_itemState="inactive" />
     </com.unigainfo.android.meview.onechoice.ChoiceGroup>
 
 
@@ -77,6 +43,5 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:clipToPadding="false"
-        android:visibility="gone"
         tools:listitem="@layout/list_item_student"></android.support.v7.widget.RecyclerView>
 </LinearLayout>
