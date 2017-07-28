@@ -56,8 +56,13 @@ public class MeFlexAdapter<T> extends RecyclerView.Adapter<ItemViewHolder> {
     @Override
     public final ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolderFactory factory = getViewHolderFactory(viewType);
-
-        return factory.createViewHolder(layoutInflater, parent);
+        try{
+            ItemViewHolder vh = factory.createViewHolder(layoutInflater, parent);
+            return vh;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

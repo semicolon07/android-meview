@@ -28,7 +28,7 @@ public class DividerViewHolderFactory extends ViewHolderFactory<DividerItem,Divi
     public void bindData(ViewHolder viewHolder, DividerItem item, int position) {
     }
 
-    static class ViewHolder extends ItemViewHolder {
+    public static class ViewHolder extends ItemViewHolder {
 
         private final LinearLayout dividerLine;
 

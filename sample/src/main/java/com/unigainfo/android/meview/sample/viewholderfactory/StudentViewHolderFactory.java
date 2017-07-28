@@ -23,8 +23,8 @@ public class StudentViewHolderFactory extends ViewHolderFactory<Student,StudentV
     }
 
     @Override
-    public ViewHolder getViewHolder(View view) {
-        final ViewHolder viewHolder = new ViewHolder(view);
+    protected void initViewHolder(final ViewHolder viewHolder) {
+        super.initViewHolder(viewHolder);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,7 +32,6 @@ public class StudentViewHolderFactory extends ViewHolderFactory<Student,StudentV
                     listener.onStudentItemClick(viewHolder.item);
             }
         });
-        return viewHolder;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class StudentViewHolderFactory extends ViewHolderFactory<Student,StudentV
         viewHolder.item = item;
     }
 
-    class ViewHolder extends ItemViewHolder{
+    public class ViewHolder extends ItemViewHolder{
         TextView titleTextView;
         TextView detailTextView;
         Student item;
