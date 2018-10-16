@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Raphaël Bussa
+ * Copyright (c) 2017
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package rebus.permissionutils;
+package com.unigainfo.android.meview.permission;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by raphaelbussa on 22/06/16.
@@ -37,6 +37,6 @@ public interface FullCallback {
      * @param permissionsDeniedForever list of permission denied forever
      * @param permissionsAsked         list of permission asked
      */
-    void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked);
+    void result(List<PermissionEnum> permissionsGranted, List<PermissionEnum> permissionsDenied, List<PermissionEnum> permissionsDeniedForever, List<PermissionEnum> permissionsAsked);
 
 }

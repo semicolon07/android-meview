@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements StudentViewHolder
         //initBasicAdapterInstances();
     }
 
+
     private void initBasicAdapterInstances() {
         BasicAdapter adapter = new BasicAdapter(this, initPureStudentList(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

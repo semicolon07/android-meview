@@ -42,9 +42,27 @@ public abstract class ViewHolderFactory<T,VH extends ItemViewHolder> {
     // Support Inner Class Only
     protected VH getViewHolder(View view){
         try{
-            //Constructor[] cs = holderClass.getConstructors();
-            Constructor constructor = holderClass.getConstructor(this.getClass(),View.class);
-            VH viewHolder = (VH) constructor.newInstance(this,view);
+            VH viewHolder = null;
+            Constructor[] constructors = holderClass.getConstructors();
+            if(constructors == null || constructors.length == 0) return null;
+            Constructor cs = constructors[0];
+            Class[] params = cs.getParameterTypes();
+
+            if (params == null || params.length == 0) return null;
+
+            // One parameter is View
+            if (params.length == 1 &&
+                    params[0] == View.class){
+                viewHolder = (VH) cs.newInstance(view);
+            }
+            else if(params.length == 2 &&
+                    params[0] == this.getClass() &&
+                    params[1] == View.class){
+                viewHolder =  (VH) cs.newInstance(this,view);
+            }
+
+            //Constructor constructor = holderClass.getConstructor(this.getClass(),View.class);
+            //VH viewHolder = (VH) constructor.newInstance(this,view);
             return viewHolder;
         }catch (Exception e){
             e.printStackTrace();

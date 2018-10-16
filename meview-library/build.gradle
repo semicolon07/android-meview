@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 
 def libraryGroupId = 'com.unigainfo.android'
 def libraryArtifactId = 'meview-library'
-def libraryVersionCode = '1.2.0'
+def libraryVersionCode = '1.2.4'
 
 ext {
     bintrayRepo = 'maven'
@@ -38,8 +38,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 6
-        versionName "1.2.0"
+        versionCode 9
+        versionName "1.2.4"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -52,21 +52,22 @@ android {
     }
 }
 
-def supportLibraryVersion = '26.0.0'
+def supportLibraryVersion = '26.0.1'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
-    compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "com.android.support:support-v13:${supportLibraryVersion}"
+    implementation "com.android.support:recyclerview-v7:${supportLibraryVersion}"
     compile 'com.google.android:flexbox:0.2.3'
     testCompile 'junit:junit:4.12'
 }
 
 
-publishing {
+/*publishing {
     publications {
         aar(MavenPublication) {
             groupId libraryGroupId
@@ -96,7 +97,7 @@ artifactory {
             publishPom = true
         }
     }
-}
+}*/
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
